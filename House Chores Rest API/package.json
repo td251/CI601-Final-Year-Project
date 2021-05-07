@@ -1,0 +1,39 @@
+{
+  "name": "nodejsto-do-app",
+  "version": "1.0.0",
+  "description": "Node js & mysql need to deploy to heroku ",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "to-do"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mysql",
+    "restapi",
+    "heroku"
+  ],
+  "author": "Tyler",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.15.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
+    "newrelic": "^7.2.1",
+    "node-cron": "^3.0.0",
+    "nodemailer": "^6.4.17",
+    "nodemon": "^2.0.6",
+    "socket.io": "^3.0.4",
+    "web-push": "^3.4.4"
+  }
+}
