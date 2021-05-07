@@ -1,0 +1,53 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+
+
+
+<link rel="icon" href="Favicon.png">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<div class="wrapper fadeInDown">
+
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+    </div>
+
+    <!-- Login Form -->
+    <form name="registerForm" [formGroup]="registerForm">
+
+      <input formControlName="userName" type="text" id="login" class="form-control" class="fadeIn second" name="login"
+        placeholder="user name">
+        <div *ngIf="registerForm.controls['userName'].invalid  && registerForm.controls['userName'].touched" class="alert-danger">User name can't contain spaces </div>
+      <input formControlName="email" type="text" id="login" class="form-control" class="fadeIn second" name="login"
+        type="email" placeholder="email">
+      <div *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched"
+        class="alert-danger"> Must enter a valid email</div>
+      <input formControlName="name" type="text" id="login" class="form-control" class="fadeIn second" name="login"
+        placeholder="first name">
+        <div *ngIf="registerForm.controls['name'].invalid  && registerForm.controls['name'].touched" class="alert-danger"> First name can't contain spaces</div>
+      <input formControlName='password' class="form-control" placeholder="password" type="password" type="password"
+        class="fadeIn third" name="login">
+      <div *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched" class="alert-danger"> Password needs to be greater than 6 and contain no spaces
+        characters</div>
+
+
+      <input [disabled]="!registerForm.valid" (click)="createUser(registerForm); registerForm.reset()" type="submit"
+        id="logButton" class="fadeIn fourth" value="Register">
+
+    </form>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a (click)="backToLogin()" class="underlineHover" href="#">Back to login </a>
+    </div>
+
+  </div>
+</div>

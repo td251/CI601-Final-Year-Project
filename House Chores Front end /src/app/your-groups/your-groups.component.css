@@ -1,0 +1,65 @@
+.groupHeading{
+    color: rgba(255, 255, 255, 0.85);
+    margin-left: auto;
+    margin-right: auto;
+}
+.groupYouAdded
+{
+    margin-left: auto;
+    margin-right: auto ;
+}
+.titleForAds{
+    margin-left: auto;
+  right: 30%;
+}
+#forms{
+    display:block; 
+}
+.groupIcons
+{
+    width: 50px;
+
+}
+#pannel:hover{
+background-color: #DCDCDC;
+}
+.panel-heading 
+{
+    background: grey;
+}
+
+#groupIcon
+{
+    width: 30%; 
+    float: left;
+    height: 80%;
+    margin-right: 20px;
+    cursor: pointer;
+    position: relative;
+}
+#body:hover{
+    background-color: white;
+
+}
+#binIcoon 
+{
+    width:100px;
+}
+.pan{
+    margin: 0px auto;
+    margin-top: 10px;
+}
+.groupYouAdded
+{
+    clear: both;
+}
+.groupFormz{
+    clear: both;
+
+}
+#showMore{
+    left: 40%;
+}
+#heading {
+font: Sans-Serif;
+}

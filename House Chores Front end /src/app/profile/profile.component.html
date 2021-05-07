@@ -1,0 +1,7 @@
+
+<div class="main">
+  <input (change)="onFilePicked($event)" class="custom-file-input"
+         placeholder="Upload File" type="file" />
+  <!-- <button (click)="onFileUpload()" class="myButton">Upload File</button> -->
+  <p *ngIf="errorMsg"> Please Select file</p>
+</div>

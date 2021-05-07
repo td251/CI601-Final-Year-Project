@@ -1,0 +1,43 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Open Sans';
+}
+
+h1,
+h1,
+h3,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+@import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
+
+#toast-container>div {
+  opacity: 1;
+}
+
+.toast {
+  font-size: initial !important;
+  border: initial !important;
+  backdrop-filter: blur(0) !important;
+}
+
+.toast-success {
+  background-color: #51A351 !important;
+}
+
+.toast-error {
+  background-color: #BD362F !important;
+}
+
+.toast-info {
+  background-color: #2F96B4 !important;
+}
+
+.toast-warning {
+  background-color: #F89406 !important;
+}

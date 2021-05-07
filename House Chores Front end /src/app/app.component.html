@@ -1,0 +1,37 @@
+<html lang="en">
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="#">{{title}}</a>
+  <button class="navbar-toggler" type="button" (click)="toggleCollapsed()" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon" ngToggler></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault"  [ngbCollapse]="isCollapsed" >
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="your-groups">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="calendar">Calendar </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="Tasks">Tasks</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="your-profile">Profile</a>
+      </li>
+
+    </ul> 
+    <a class="nav-link" style="float: right;" href="your-profile" (click) = "Logout()">Logout</a>
+
+
+  </div>
+    <!-- <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" href="your-profile">Profile</button> -->
+
+</nav>
+<div class="page-content-container">
+  <router-outlet></router-outlet>
+  <div class="footer">
+    <p>Copyright © House Chores all rights reserved to Quakez 2021</p>
+  </div>
+
+</div></body>

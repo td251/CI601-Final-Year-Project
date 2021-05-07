@@ -1,0 +1,10 @@
+.container-fluid
+{
+    position: relative;
+    margin-top: 8%;
+    height: 60%;
+    width: 80%; 
+    overflow: scroll;
+    border-radius: 25px;
+    border: 4px solid black;
+}

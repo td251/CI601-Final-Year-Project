@@ -1,0 +1,94 @@
+<div id="heading" class="col text-center">
+  <h1>Tasks you've created</h1>
+</div>
+
+<div id="tableView" class="container-fluid" *ngIf="noCreatedTask != true">
+  <br>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">
+          <div class="form-check">
+            <button type="button" class="btn btn-danger" (click)="test()" d>Delete</button>
+
+          </div>
+        </th>
+        <th scope="col">User assigned</th>
+        <th scope="col">Date created </th>
+        <th scope="col">Date Due </th>
+        <th scope="col"> Complete</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of createdTask">
+        <th scope="row">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="flexCheckDefault"
+              (click)="onOptionsSelected(task.Id)" />
+          </div>
+        </th>
+        <th scope="row">{{ task.user_assigned }}</th>
+        <td>{{ task.date_created | date}}</td>
+        <td>{{ task.date_due | date}}</td>
+        <td class="completeText" *ngIf="task.complete == 1" w>COMPLETE </td>
+        <td class="unCompleteText" *ngIf="task.complete != 1" w> INCOMPLETE </td>
+        <td (click)="getTaskForComment(content,task.Id)"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="28"
+            fill="currentColor" class="bi bi-chat-right-dots" viewBox="0 0 16 16">
+            <path
+              d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z" />
+            <path
+              d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+          </svg>
+        </td>
+        <td> <button class="btn btn-primary" *ngIf="task.complete != 1"
+            (click)="editThisTask(content2, task.Id)">Edit</button>
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+</div>
+<br>
+<br>
+<div *ngIf="noCreatedTask === true">
+  <div class="card border-primary mb-3">
+    <div class="card-body text-primary">
+      <h5 class="card-title" style='text-align: center;'>No tasks yet created</h5>
+      <p class="card-text" style='text-align: center;'> You have not yet created any tasks navigate to the home page and
+        create a group to start assigning tasks.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Button trigger modal -->
+<ng-template #content let-modal>
+  <div *ngFor='let task of taskClicked'>
+    <div class="modal-header">
+      <h4 class="modal-title">Task Title: {{task.task_title}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <h5 class="assigneeComment"> Assignee: {{task.user_assigned}}</h5>
+      <h7> Leave a comment on this task to notify the user </h7>
+      <app-comments [taskId]="task.Id"></app-comments>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #content2 let-modal>
+  <div class="container-fluid">
+    <app-task-form (hasBeenEdited)="taskEdited($event)" [taskId]="editTaskId"></app-task-form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>

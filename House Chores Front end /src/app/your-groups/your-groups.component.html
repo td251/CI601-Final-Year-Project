@@ -1,0 +1,199 @@
+<div class="container-fluid">
+  <br>
+  <br>
+  <div class="text-center">
+    <button (click)="createPage()" type="button" class="btn btn-success center-block">Create a group</button>
+  </div>
+  <div [@slideInOut]="animationState" class="divA" *ngIf="makeNewGroup">
+    <app-group-form></app-group-form>
+  </div>
+  <br>
+  <br>
+  <div id="heading" class="col text-center">
+    <h1>{{userName}}'s created groups:</h1>
+  </div>
+  <div class="pan" *ngIf="hasGroups">
+    <div *ngFor="let groups of createdGroups; let i = index">
+      <div *ngIf="!showMoreGroups">
+        <div *ngIf="i < 2 ">
+          <div id="pannel" class="card text-center">
+            <button class="btn btn-danger" (click)="open(content,groups.groupId)">Delete</button>
+
+            <button type="button" class="btn btn-primary" (click)="open2(content2,groups.groupId, groups.GroupName)">Add
+              members</button>
+
+            <div (click)="groupClicked(groups)" class="card-body">
+              <h5 class="card-title">Chat Room For: {{groups.GroupName}}
+              </h5>
+              <p class="card-text">{{groups.Description}}</p>
+              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+      <div *ngIf="showMoreGroups">
+        <div id="pannel" class="card text-center">
+          <button class="btn btn-danger" (click)="open(content,groups.groupId)">Delete</button>
+
+          <button type="button" class="btn btn-primary" (click)="open2(content2,groups.groupId, groups.GroupName)">Add
+            members</button>
+
+          <div (click)="groupClicked(groups)" class="card-body">
+            <h5 class="card-title">Chat Room For:{{groups.GroupName}}
+            </h5>
+            <p class="card-text">{{groups.Description}}</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          </div>
+        </div>
+        <br>
+      </div>
+    </div>
+    <div *ngIf="!showMoreGroups" class="col text-center">
+
+      <button (click)="showMoreCreated()" id="showMore" type="button" class="btn btn-outline-primary">Show
+        more</button>
+    </div>
+    <div *ngIf="showMoreGroups" class="col text-center">
+
+      <button (click)="showLessCreated()" id="showMore" type="button" class="btn btn-outline-primary">Show
+        less</button>
+    </div>
+  </div>
+  <br>
+  <div *ngIf="hasGroups === false">
+    <div class="card border-primary mb-3">
+      <div class="card-body text-primary">
+        <h5 class="card-title" style='text-align: center;'>No groups created</h5>
+        <p class="card-text" style='text-align: center;'> You have not yet created any groups click 'Create group'
+          above to get started!</p>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class='groupYouAdded'>
+    <div id="heading" class="col text-center">
+
+      <h1 class="titleForAds">Groups {{userName}}'s been added to</h1>
+    </div>
+    <br>
+    <div *ngIf="addedToGroups === false">
+      <div class="card border-primary mb-3">
+        <div class="card-body text-primary">
+          <h5 class="card-title" style='text-align: center;'>You have not yet been aded to any groups</h5>
+          <p class="card-text" style='text-align: center;'> You have not yet been added to any groups</p>
+        </div>
+      </div>
+    </div>
+    <div class="addedGroups" *ngIf="addedToGroups">
+      <div *ngFor="let groups of membersGroup; let i = index">
+
+        <div *ngIf="!showMoreAddedGroups">
+          <div *ngIf="i < 2 ">
+
+            <div>
+              <div id="pannel" class="card text-center">
+                <button type="button" class="btn btn-warning"
+                  (click)="leaveModal(leaveContent,groups.groupId)">Leave</button>
+
+                <div (click)="groupClicked(groups)" class="card-body">
+
+                  <h5 class="card-title">Chat Room For: {{groups.GroupName}}</h5>
+                  <p class="card-text">{{groups.Description}}</p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+              <br>
+
+            </div>
+
+            <br>
+          </div>
+        </div>
+        <div *ngIf="showMoreAddedGroups">
+          <div id="pannel" class="card text-center">
+            <button type="button" class="btn btn-warning"
+              (click)="leaveModal(leaveContent,groups.groupId)">Leave</button>
+
+            <div (click)="groupClicked(groups)" class="card-body">
+
+              <h5 class="card-title"> {{groups.GroupName}}</h5>
+              <p class="card-text">{{groups.Description}}</p>
+              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+      <div *ngIf="!showMoreAddedGroups && addedToGroups === true " class="col text-center">
+
+        <button (click)="showMoreAdded()" id="showMore" type="button" class="btn btn-outline-primary">Show
+          more</button>
+      </div>
+      <div *ngIf="showMoreAddedGroups" class="col text-center">
+
+        <button (click)="showLessAdded()" id="showMore" type="button" class="btn btn-outline-primary">Show
+          less</button>
+      </div>
+    </div>
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Delete </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete?
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="modal.close('Save click');">Delete</button>
+      </div>
+    </ng-template>
+    <ng-template #content2 let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="dateOfBirth">Select members from the below drop down list to add members:</label>
+            <div class="input-group">
+
+              <select class="form-control" name="users" #select (change)='onOptionsSelected(select.value)'>
+                <option id='input' *ngFor="let users of userList" placeholder='Add Users' ngValue="{{UserList}}">
+                  {{users.userName}}</option>
+              </select>
+              <br>
+
+            </div>
+          </div>
+        </form>
+        <div *ngFor="let ppl of membersIngGroup; let i = index">
+          <p class='userName'> {{membersIngGroup[i]}} <button type="button" class="btn btn-danger"
+              (click)="removeGroupMembers(membersIngGroup, i)">&times;</button></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Add </button>
+      </div>
+    </ng-template>
+    <ng-template #leaveContent let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Delete </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- redifine by getting group name and what not  -->
+        Are you sure you want to leave this group?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" (click)="modal.close('Save click');">Leave </button>
+      </div>
+    </ng-template>

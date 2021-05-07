@@ -1,0 +1,359 @@
+<br>
+
+<button *ngIf="onlyViewAssigned" (click)="taskCreated()" type="button" class="btn btn-outline-primary">View tasks you
+  have created</button>
+<button *ngIf="!onlyViewAssigned" (click)="assignTask()" type="button" class="btn btn-outline-primary">View assign
+  tasks</button>
+  <div *ngIf="onlyViewAssigned; else createdTaskBlock">
+    <div class="container-fluid">
+
+      <div class="row">
+      <div class="col">
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>View Tasks</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button (click) = "viewTasks(1)" class="dropdown-item">View newly assigned </button>
+            <button (click) = " viewTasks(2)"class="dropdown-item">Tasks to do  </button>
+            <button (click) = " viewTasks(3)"class="dropdown-item">Tasks in progress</button>
+            <button (click) = " viewTasks(4)"class="dropdown-item">Tasks completed</button>
+            <button (click) = " viewTasks(5)"class="dropdown-item">View all</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="container-fluid" style="float: right;">
+
+      <div class="row">
+      <div class="col">
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Sort by</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button (click) = "priority()" class="dropdown-item"> Priority </button>
+            <button (click) = " dateDue()"class="dropdown-item"> Date due </button>
+           
+
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  <div class="container-fluid">    
+      <div *ngIf= "viewTaksAssigned == true || viewAllTasks == true"  id = "heading" class="col text-center"> 
+        <h1> Tasks you have been assigned </h1>
+      <br> 
+      <div *ngIf = "!(assignTask)?.length"> </div>
+      <div  id = "heading" class="col text-center"> 
+      <div *ngIf="noAssigned "class="card">
+      <div class="card-body">
+        <h5 class="card-title"> You have no tasks </h5>
+        <p class="card-text">Update existing tasks to view them in this section</p>
+        <br>
+      </div>
+    </div>
+      </div>
+      <div *ngIf= "viewTaksAssigned || viewAllTasks" class = "background" >  
+  <div *ngFor='let task of assignTasks; let i = index'>
+    <div *ngIf="tasksDate[i].daysDue > 0" class="card bg-secondary text-white">
+      <div class="card-body">You have {{tasksDate[i].daysDue}} days left to complete the task </div>
+      
+    </div>
+    <div *ngIf="tasksDate[i].daysDue < 0" class="card bg-danger text-white">
+      <div class="card-body"> This task is {{tasksDate[i].daysDue * -1}} days overdue </div>
+    </div>
+    <div *ngIf="tasksDate[i].daysDue == 0" class="card bg-warning text-white">
+      <div class="card-body"> This task is due today</div>
+    </div>
+    <div>
+      <div *ngIf="task.priority == 1 || task.priority == null">
+
+        <div class="card text-white bg-success mb-3" style="max-width: 100rem;">
+          <div class="card-header">Low Priority</div>
+          <div class="card-body">
+            <h5 class="card-title">Task Title: {{task.task_title}}</h5>
+            <p class="card-text">{{task.task_description}}</p>
+          </div>x
+          
+          <button (click)="open(content2,task.Id, radioStatus)" type="button" class="btn btn-primary">Update Status</button>
+          
+          <button (click) = "getTaskForComment(content, task.Id)" type="button" class="btn btn-light">Comments  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
+            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
+          </svg></button>
+
+        </div>
+      </div>
+    </div>
+    <div>
+
+      <div *ngIf="task.priority == 3">
+        <div class="card text-white bg-danger mb-3" style="max-width: 100rem;">
+          <div class="card-header">High Priority</div>
+          <div class="card-body">
+            <h5 class="card-title">Task Title: {{task.task_title}}</h5>
+            <p class="card-text">{{task.task_description}}</p>
+
+          </div>
+
+          <button (click)="open(content2,task.Id, radioStatus)" type="button" class="btn btn-primary">Update Status</button>
+          <button (click) = "getTaskForComment(content, task.Id)" type="button" class="btn btn-light">Comments  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
+            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
+          </svg></button>
+          <app-progress-bar [progress]="100" [total]="100"></app-progress-bar>
+
+        </div>
+      </div>
+
+
+      <div *ngIf="task.priority == 2">
+        <h1> {{task.daysDue}} </h1>
+        <div class="card text-white bg-warning mb-3" style="max-width: 100rem;">
+          <div class="card-header">Medium Priority</div>
+          <div class="card-body">
+            <h5 class="card-title">Task Title: {{task.task_title}}</h5>
+            <p class="card-text">{{task.task_description}}</p>
+          </div>
+          <button (click)="open(content2,task.Id, radioStatus)" type="button" class="btn btn-primary">Update Status</button>
+          <button (click) = "getTaskForComment(content, task.Id)" type="button" class="btn btn-light">Comments  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
+            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
+          </svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<br> 
+
+  <div *ngIf= "viewTasksToDo || viewAllTasks" id = "heading" class="col text-center"> 
+    <h1>  Tasks to do: </h1>
+    <div *ngIf = "!(taskToDo)?.length"class="card">
+      <div class="card-body">
+        <h5 class="card-title"> You have no tasks </h5>
+        <p class="card-text">Update existing tasks to view them in this section</p>
+        <br>
+      </div>
+    </div>
+
+
+      <div *ngFor='let task of taskToDo; let i = index'>
+        <!-- <div class="card-body"> This task is {{task.daysDue * -1}} days overdue </div> -->
+      <!-- <div *ngIf="tasksDate[i].daysDue == 0" class="card bg-warning text-white">
+        <div class="card-body"> This task is due today</div>
+      </div> -->
+      <div>
+        <div *ngIf="task.priority == 1 || task.priority == null">
+  
+          <div class="card text-white bg-success mb-3" style="max-width: 100rem;">
+            <div class="card-header">Low Priority</div>
+            <div class="card-body">
+              <h5 class="card-title">Task Title: {{task.task_title}}</h5>
+              <p class="card-text">{{task.task_description}}</p>
+            </div>
+            
+            <button (click)="open(content2,task.Id, radioStatus)" type="button" class="btn btn-primary">Update Status</button>
+            
+            <button (click) = "getTaskForComment(content, task.Id)" type="button" class="btn btn-light">Comments  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
+              <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
+            </svg></button>
+  
+          </div>
+        </div>
+      </div>
+      <div>
+  
+        <div *ngIf="task.priority == 3">
+  
+          <div class="card text-white bg-danger mb-3" style="max-width: 100rem;">
+            <div class="card-header">High Priority</div>
+            <div class="card-body">
+              <h5 class="card-title">Task Title: {{task.task_title}}</h5>
+              <p class="card-text">{{task.task_description}}</p>
+  
+            </div>
+  
+            <button (click)="open(content2,task.Id, radioStatus)" type="button" class="btn btn-primary">Update Status</button>
+            <button (click) = "getTaskForComment(content, task.Id)" type="button" class="btn btn-light">Comments  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
+              <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
+            </svg></button>
+            <app-progress-bar [progress]="100" [total]="100"></app-progress-bar>
+  
+          </div>
+        </div>
+  
+  
+        <div *ngIf="task.priority == 2">
+          <h1> {{task.daysDue}} </h1>
+          <div class="card text-white bg-warning mb-3" style="max-width: 100rem;">
+            <div class="card-header">Medium Priority</div>
+            <div class="card-body">
+              <h5 class="card-title">Task Title: {{task.task_title}}</h5>
+              <p class="card-text">{{task.task_description}}</p>
+            </div>
+            <button (click)="open(content2,task.Id, radioStatus)" type="button" class="btn btn-primary">Update Status</button>
+            <button (click) = "getTaskForComment(content, task.Id)" type="button" class="btn btn-light">Comments  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
+              <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
+            </svg></button>
+          </div>
+        </div>
+      </div>
+
+</div> 
+
+  </div>
+  </div>
+  <div *ngIf= "viewTasksInProgress || viewAllTasks"  id = "heading" class="col text-center"> 
+    <h1>  In progress </h1>
+    <div *ngIf = "!(taskInProgress)?.length" class="card">
+      <div class="card-body">
+        <h5 class="card-title"> You have no tasks </h5>
+        <p class="card-text">Update existing tasks to view them in this section</p>
+        <br>
+      </div>
+    </div>
+      <div *ngIf = "!noAssigned">  
+
+      <div *ngFor='let task of taskInProgress; let i = index'>
+        <!-- <div class="card-body"> This task is {{task.daysDue * -1}} days overdue </div> -->
+      <!-- <div *ngIf="tasksDate[i].daysDue == 0" class="card bg-warning text-white">
+        <div class="card-body"> This task is due today</div>
+      </div> -->
+      <div>
+        <div *ngIf="task.priority == 1 || task.priority == null">
+  
+          <div class="card text-white bg-success mb-3" style="max-width: 100rem;">
+            <div class="card-header">Low Priority</div>
+            <div class="card-body">
+              <h5 class="card-title">Task Title:  {{task.task_title}}</h5>
+              <p class="card-text">{{task.task_description}}</p>
+            </div>
+            
+            <button (click)="open(content2,task.Id, radioStatus)" type="button" class="btn btn-primary">Update Status</button>
+            
+            <button (click) = "getTaskForComment(content, task.Id)" type="button" class="btn btn-light">Comments  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
+              <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
+            </svg></button>
+  
+          </div>
+        </div>
+      </div>
+      <div>
+  
+        <div *ngIf="task.priority == 3">
+  
+          <div class="card text-white bg-danger mb-3" style="max-width: 100rem;">
+            <div class="card-header">High Priority</div>
+            <div class="card-body">
+              <h5 class="card-title">Task Title: {{task.task_title}}</h5>
+              <p class="card-text">{{task.task_description}}</p>
+  
+            </div>
+  
+            <button (click)="open(content2,task.Id, radioStatus)" type="button" class="btn btn-primary">Update Status</button>
+            <button (click) = "getTaskForComment(content, task.Id)" type="button" class="btn btn-light">Comments  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
+              <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
+            </svg></button>
+            <app-progress-bar [progress]="100" [total]="100"></app-progress-bar>
+  
+          </div>
+        </div>
+  
+  
+        <div *ngIf="task.priority == 2">
+          <h1> {{task.daysDue}} </h1>
+          <div class="card text-white bg-warning mb-3" style="max-width: 100rem;">
+            <div class="card-header">Medium Priority</div>
+            <div class="card-body">
+              <h5 class="card-title">Task Title: {{task.task_title}}</h5>
+              <p class="card-text">{{task.task_description}}</p>
+            </div>
+            <button (click)="open(content2,task.Id, radioStatus)" type="button" class="btn btn-primary">Update Status</button>
+            <button (click) = "getTaskForComment(content, task.Id)" type="button" class="btn btn-light">Comments  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
+              <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
+            </svg></button>
+          </div>
+        </div>
+      </div>
+
+</div> 
+</div>
+  </div>
+  <div>
+    <br>
+
+  <br>
+  <div  *ngIf= "viewTasksCompleted || viewAllTasks" id = "heading" class="col text-center"> 
+  <h1>Tasks you have completed: </h1>
+  <div  *ngIf= "viewTasksCompleted || viewAllTasks" >
+  <div  *ngFor="let cTasks of completedTasks">
+
+    <div class="card text-white bg-success mb-3" style="max-width: 100rem;">
+      <div class="card-header">Complete</div>
+      <div class="card-body">
+        <h5 class="card-title">Task Title: {{cTasks.task_title}}</h5>
+        <p class="card-text">{{cTasks.task_description}}</p>
+      </div>
+      <button (click)="done(task.Id)" type="button" class="btn btn-primary">Reopen Task </button>
+      <button (click) = "getTaskForComment(content, cTasks.Id)" type="button" class="btn btn-light">Comments  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
+        <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
+      </svg></button>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+<ng-template #createdTaskBlock>
+  <app-task-created></app-task-created>
+</ng-template>
+    <ng-template #content2 let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Update status </h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id = "filterStatus" class="form-check">
+              <input class="form-check-input" type="radio" name="exampleRadios" [(ngModel)]= "radioStatus" id="exampleRadios1" value=1 checked>
+              <label class="form-check-label" for="exampleRadios1">
+                To Do 
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" [(ngModel)]= "radioStatus" value=2>
+              <label class="form-check-label" for="exampleRadios2">
+               In progress 
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3"  [(ngModel)]= "radioStatus" value=3 >
+              <label class="form-check-label" for="exampleRadios3">
+                Done             
+              </label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="modal.close('Save click');">Update</button>
+          </div>
+        </ng-template>
+          <ng-template #content let-modal>
+    <div *ngFor='let task of taskClicked'>
+      <div class="modal-header">
+        <h4 class="modal-title">Task Title: {{task.task_title}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5 class="assigneeComment"> Assignee: {{task.user_assigned}}</h5>
+        <h6 class="taskDescriptionForComment">Task Description: {{task.task_description}}</h6>
+        <h7> Leave a comment on this task to notify the user </h7>
+        <app-comments [taskId]="task.Id"></app-comments>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div> 
+  </ng-template>

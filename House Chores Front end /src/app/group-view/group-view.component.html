@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" (click)="back()" cursor="pointer" font-weight="900" width="40" height="40"
+  fill="white" class="bi bi-arrow-left" viewBox="0 0 16 16">
+  <path fill-rule="evenodd"
+    d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+</svg>
+
+<!-- <div id ="card"class = "container p-3 my-3 bg-dark text-white"> 
+    <h1>HEADING </h1>
+</div> -->
+<div class="messaging">
+  <div class="inbox_msg">
+    <div class="inbox_people">
+      <div class="headind_srch">
+        <div class="recent_heading">
+          <h4>{{groupTitle}}</h4>
+        </div>
+        <div class="srch_bar">
+          <div class="stylish-input-group">
+            <input type="text" class="search-bar" placeholder="Search">
+            <span class="input-group-addon">
+              <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+            </span>
+           </div>
+        </div>
+      </div>
+      <div class="inbox_chat">
+
+        <h1 class="membersHeading"> Members</h1>
+        <div [hidden]="!noMemebrsAdded">
+          <h1> You have not added any members to {{groupTitle}}, get adding. </h1>
+        </div>
+        <div *ngFor="let ppl of peopleInGroup">
+          <!-- <div>
+           <p class = "membersNames"> 
+             {{ppl.UserName}}</p>
+            </div> -->
+          <div class="dropdown">
+            <svg xmlns="http://www.w3.org/2000/svg" margin-bottom="20px" width="20" height="20" fill="currentColor"
+              class="bi bi-person" viewBox="0 0 16 16">
+              <path
+                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+            </svg>
+            <p class="membersNames">{{ppl.UserName}}</p>
+            <div class="dropdown-content">
+              <p (click)="assignNewTask(ppl.UserName)"> Assign Task</p>
+            </div>
+          </div>
+
+        </div>
+        <div>
+
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="chatBlockView; else taskBlock" class="mesgs">
+      <div class="msg_history">
+        <div *ngFor='let msg of messageHistory; let i = index'>
+          <ul class="chat-messages-show-list">
+            <!-- if user currently in chat has sent messages -->
+            <h1 class="reciptent" *ngIf='msg.currentUsersMessage === false'>{{msg.sender}} </h1>
+
+            <li *ngIf='msg.currentUsersMessage === false' class="receivedMsg">
+              {{msg.message}}
+
+            </li>
+            <!-- if user not currently logged in has sent the messages -->
+            <li *ngIf='msg.currentUsersMessage === true' class="sentMsgs ">
+              {{msg.message}}
+            </li>
+          </ul>
+        </div>
+        <ul class="chat-messages-show-list" id="message-list">
+
+        </ul>
+      </div>
+      <div class="type_msg">
+        <div class="input_msg_write">
+          <input type="text" class="write_msg" placeholder="Create a new task" [(ngModel)]="message"
+            (keydown)="typing()" (keydown.enter)="sendMessage(this.idInt)">
+          <button class="msg_send_btn" type="button" (click)="sendMessage(this.idInt)"><i
+              class="fa fa-paper-plane-o"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #taskBlock>
+  <div class="taskForm">
+    <form name="taskForm" [formGroup]="taskForm">
+      <div class="form-group">
+        <label for="user Assigned">
+          User assigned
+        </label>
+        <p>{{assignedUser}}</p>
+
+      </div>
+      <div class="form-group">
+        <label for="taskTitle">
+          Task title
+        </label>
+        <input formControlName='taskTitle' type="text" class="form-control" id="taskTitle" name="taskTitle"
+          placeholder="Task Title" />
+          <div *ngIf="taskForm.controls['taskTitle'].invalid" class="alert-danger"> 
+            Task title can't be empty</div>
+      </div>
+      <div class="form-group">
+        <label for="date">
+          When do you want the task done?
+        </label>
+        <input formControlName='dateDue' type="date" class="form-control" id="taskDate" />
+         <div *ngIf="taskForm.controls['taskTitle'].invalid && registerForm.controls['taskTitle'].touched" class="alert-danger"> 
+          Task description can't be empty </div>
+      </div>
+      <div class="form-group">
+        <label for="roomName">
+          Make the task reoccuring?
+          <span class="required"> *</span>
+        </label>
+        <select class="form-control" formControlName='reoccuring' name="reoccuring" #Origin>
+          <option *ngFor="let repeat of reoccuring" values="{{repeat.value}}"> {{repeat.viewValue}} </option>
+        </select>
+
+      </div>
+      <div class="form-group">
+        <label for="descriptions">
+          Description
+        </label>
+        <input formControlName='taskDescription' type="text" class="form-control" name="taskDescription"
+          placeholder="Task Description" />
+          <div *ngIf="taskForm.controls['taskDescription'].invalid && taskForm.controls['taskDescription'].touched" class="alert-danger"> 
+           Task description can't be empty </div>
+      </div>
+      <div class="form-group">
+        <label for="roomName">
+          Priority
+          <span class="required"> *</span>
+        </label>
+        <select class="form-control" formControlName='priority' name="priority" #Origin>
+          <option *ngFor="let priority of priorties" values="{{priority.value}}"> {{priority.viewValue}} </option>
+        </select>
+      </div>
+      <br>
+      <button type= "submit" [disabled]="!taskForm.valid" (click)="createTask(taskForm)" type="button" class="btn btn-success">Create tasks </button>
+      <br> 
+      <button (click)="cancel()" type="button" class="btn btn-danger">Cancel </button>
+
+    </form>
+  </div>
+</ng-template>

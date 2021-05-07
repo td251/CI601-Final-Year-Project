@@ -1,0 +1,56 @@
+<br>
+<br>
+
+
+<div class = "container-fluid"> 
+<div class = "taskForm">
+    <form  name = "taskForm" [formGroup]="taskForm">
+      <div class = "form-group">
+        <label for= "user Assigned">
+        User assigned
+        </label>
+        <select formControlName='userAssigned' type= "text" class="form-control" id = "userAssigned" name = "userAssigned" placeholder = "User assigned"> 
+        <option *ngFor="let users of userList; let i = index" values="{{ppl}}">
+          {{users.userName}} </option>
+      </select>
+      </div>
+      <div class ="form-group">
+        <label for="taskTitle">
+          Task title
+        </label>
+        <input formControlName='taskTitle' type= "text" class="form-control" id = "taskTitle"  name = "taskTitle" placeholder = "Task Title"/> 
+
+      </div>
+      <div  class= "form-group">
+        <label for ="date">
+      When do you want the task done? 
+        </label>
+        <input  formControlName = 'dateDue' type = "date" class="form-control" id="taskDate"/>
+      </div>
+      <div class = "form-group">
+        <label for="descriptions">
+          Description
+        </label>
+        <input formControlName='taskDescription' ngtype= "text" class="form-control" name ="taskDescription" placeholder="Task Description"/>
+      </div>
+
+      <div class="form-group"> 
+        <label for="roomName"> 
+          Priority
+            <span class="required"> *</span>
+        </label>
+        <select class="form-control" formControlName = 'priority' name="priority" #Origin>
+<option *ngFor="let priority of priorties" values="{{priority.value}}">
+   {{priority.viewValue}} </option>
+</select>
+</div>
+<br> 
+<div class = "button"> 
+<button  (click) ="editTask(taskForm)"type="button" class="btn btn-primary"> Edit task </button>
+</div>
+    </form>
+  </div>
+</div> 
+<br>
+<br>
+
